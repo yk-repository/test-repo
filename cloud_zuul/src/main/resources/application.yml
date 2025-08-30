@@ -1,0 +1,14 @@
+##端口号
+server:
+  port: 8766
+
+##服务名称
+spring:
+  application:
+    name: service-zuul
+
+##注册中心地址
+eureka:
+  client:
+    eureka-server-u-r-l-context: http://eureka.dalaoyang.cn/eureka/
+
