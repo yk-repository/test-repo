@@ -1,0 +1,20 @@
+# IDE 配置文件
+.idea/
+   - .iml。
+   - .iws。
+   - .ipr。
+   - .gitignore。
+   - .gitkeep。
+   - .DS_Store。
+   - .xml。
+.idea/codeStyles/
+   - .xml。
+.idea/dataSources/
+   - .xml。
+# 构建输出目录
+target/
+out/
+# 日志与临时文件
+   - .log。
+   - .tmp。
+
