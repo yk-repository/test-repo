@@ -47,6 +47,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--  配置中心的依赖 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
         <!--  模型层  -->
         <dependency>
             <groupId>com.zhao</groupId>
