@@ -1,6 +1,7 @@
 package com.zhao.order.service.impl;
 
 import com.zhao.order.bean.Order;
+import com.zhao.order.feign.ProductFeignClient;
 import com.zhao.order.service.OrderService;
 import com.zhao.product.bean.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +30,16 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    // 声明式的远程调用
+    @Autowired
+    public ProductFeignClient productFeignClient;
+
 
     @Override
     public Order createOrder(Long productId, Long userId) {
         // 从商品服务远程调用查询商品信息
-        Product product = getProductFromRemote(productId);
+//        Product product = getProductFromRemote(productId);
+        Product product = productFeignClient.getProductById(productId);
         Product productWithLoadBalancer = getProductFromRemoteWithLoadBalancer(productId);
 //        Product product = getProductFromRemoteWithLoadBalancerAndRestTemplate(productId);
         log.info("商品信息: {}", product);

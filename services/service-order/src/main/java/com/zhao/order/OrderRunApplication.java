@@ -7,12 +7,14 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-@EnableDiscoveryClient
+@EnableFeignClients // 开启Feign客户端功能（扫描所有的FeignClient接口,并创建代理对象），远程调用功能
+@EnableDiscoveryClient // 开启服务发现功能
 @SpringBootApplication
 public class OrderRunApplication {
 
