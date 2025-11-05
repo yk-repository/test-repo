@@ -1,5 +1,6 @@
 package com.zhao.order.config;
 
+import feign.Logger;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,12 @@ public class OrderRestTemplateServiceConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    // 配置logger, 用于打印 RestTemplate 中的请求和响应日志
+    @Bean
+    public Logger.Level  feignLoggerLevel() {
+        return Logger.Level.FULL;
     }
 
 }
