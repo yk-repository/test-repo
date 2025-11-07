@@ -40,10 +40,10 @@ public class OrderServiceImpl implements OrderService {
         // 从商品服务远程调用查询商品信息
 //        Product product = getProductFromRemote(productId);
         Product product = productFeignClient.getProductById(productId);
-        Product productWithLoadBalancer = getProductFromRemoteWithLoadBalancer(productId);
+//        Product productWithLoadBalancer = getProductFromRemoteWithLoadBalancer(productId);
 //        Product product = getProductFromRemoteWithLoadBalancerAndRestTemplate(productId);
         log.info("商品信息: {}", product);
-        log.info("商品信息（负载均衡）: {}", productWithLoadBalancer);
+//        log.info("商品信息（负载均衡）: {}", productWithLoadBalancer);
 //        log.info("商品信息（负载均衡 + RestTemplate 注解式）: {}", product);
 
         Order order = new Order();
@@ -56,7 +56,8 @@ public class OrderServiceImpl implements OrderService {
         order.setAddress("北京市海淀区");
         // 商品列表 （需要远程调用商品进行查询）
 //        order.setProductList(Arrays.asList(product, productWithLoadBalancer, productWithLoadBalancerAndRestTemplate));
-        order.setProductList(Arrays.asList(product,productWithLoadBalancer));
+//        order.setProductList(Arrays.asList(product,productWithLoadBalancer));
+        order.setProductList(Arrays.asList(product));
         return order;
     }
 

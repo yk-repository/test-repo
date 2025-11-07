@@ -2,6 +2,7 @@ package com.zhao.product.controller;
 
 import com.zhao.product.bean.Product;
 import com.zhao.product.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,10 @@ public class ProductController {
 
     // 查询商品
     @GetMapping("/get/{productId}")
-    public Product getProduct(@PathVariable("productId") Long productId) {
+    public Product getProduct(@PathVariable("productId") Long productId,
+                              HttpServletRequest request) {
+        String token = request.getHeader("X-Token");
+        System.out.println("token: "+token);
         Product product = productService.getProductById(productId);
         System.out.println("查询商品：" + productId);
         return product;
