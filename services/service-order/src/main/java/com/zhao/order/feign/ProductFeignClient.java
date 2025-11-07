@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 // 声明式实现远程调用服务中心
-@FeignClient(value = "service-product")
+@FeignClient(value = "service-product", contextId = "serviceProduct")
 public interface ProductFeignClient {
 
     // mcv注解的两套使用逻辑

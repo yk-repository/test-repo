@@ -5,7 +5,7 @@ spring:
 # 激活prod环境
     active: public
 # 激活feign客户端
-    include: dev
+    include: feign
   application:
     name: service-order
   cloud:
@@ -17,7 +17,13 @@ spring:
 # namespace 配置是作为区分不同环境的配置，实现配置中心的数据隔离，设置默认值为public
         namespace: ${spring.profiles.active:public}
 
+
+
+
 # 以下是nacos配置中心的组环境配置
+logging:
+  level:
+    com.zhao.order.feign: debug
 ---
 spring:
   config:
