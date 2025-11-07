@@ -39,7 +39,7 @@ public class OrderController {
     public String getConfig() {
         // return "service-order.properties: timeout=" + timeout + ", autoConfirm=" + autoConfirm;
         return "service-order.properties: timeout=" + orderProperties.getTimeout() + ", autoConfirm="
-                + orderProperties.getAutoConfirm();
+                + orderProperties.getAutoConfirm() + ", dbUrl=" + orderProperties.getDbUrl();
     }
 
 }

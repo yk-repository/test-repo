@@ -1,0 +1,49 @@
+server:
+  port: 8000
+spring:
+  profiles:
+# 激活prod环境
+    active: public
+# 激活feign客户端
+    include: dev
+  application:
+    name: service-order
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      config:
+        import-check:
+          enabled: false
+# namespace 配置是作为区分不同环境的配置，实现配置中心的数据隔离，设置默认值为public
+        namespace: ${spring.profiles.active:public}
+
+# 以下是nacos配置中心的组环境配置
+---
+spring:
+  config:
+    import:
+      - optional:nacos:service-order.properties?group=DEFAULT_GROUP
+      - nacos:common.properties?group=order
+    activate:
+      on-profile: public
+---
+spring:
+  config:
+    import:
+      - nacos:common.properties?group=order
+    activate:
+      on-profile: dev
+---
+spring:
+  config:
+    import:
+      - nacos:common.properties?group=order
+    activate:
+      on-profile: prod
+---
+spring:
+  config:
+    import:
+      - nacos:common.properties?group=order
+    activate:
+      on-profile: test
