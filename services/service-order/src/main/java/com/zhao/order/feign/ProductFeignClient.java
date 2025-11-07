@@ -1,12 +1,14 @@
 package com.zhao.order.feign;
 
+import com.zhao.order.feign.fallback.ProductFeignClientFallback;
 import com.zhao.product.bean.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 // 声明式实现远程调用服务中心
-@FeignClient(value = "service-product", contextId = "serviceProduct")
+// fallback 是指定了一个 fallback 类，当调用失败时，会调用这个类的方法
+@FeignClient(value = "service-product", contextId = "serviceProduct", fallback = ProductFeignClientFallback.class)
 public interface ProductFeignClient {
 
     // mcv注解的两套使用逻辑
