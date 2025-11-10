@@ -1,5 +1,6 @@
 package com.zhao.order.service.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.zhao.order.bean.Order;
 import com.zhao.order.feign.ProductFeignClient;
 import com.zhao.order.service.OrderService;
@@ -35,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
     public ProductFeignClient productFeignClient;
 
 
+    @SentinelResource(value = "createOrder")
     @Override
     public Order createOrder(Long productId, Long userId) {
         // 从商品服务远程调用查询商品信息

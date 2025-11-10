@@ -19,3 +19,16 @@ spring:
 #            自定义请求拦截器
 #            request-interceptors:
 #              - com.zhao.order.interceptor.XTokenRequestInterceptor
+
+#  服务保护（限流熔断）
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      eager: true
+
+
+feign:
+#  服务熔断
+  sentinel:
+#    开启 Sentinel 对 Feign 客户端的支持, 默认为 false, 开启后, 会对 Feign 客户端的调用进行限流和降级
+    enabled: true
