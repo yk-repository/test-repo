@@ -1,5 +1,6 @@
 package com.zhao.order.service.impl;
 
+import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.zhao.order.bean.Order;
@@ -113,8 +114,15 @@ public class OrderServiceImpl implements OrderService {
 
     // 处理 Sentinel 阻塞异常, 当 Sentinel 阻塞时, 会调用这个方法, 并返回一个默认值, 而不是抛出异常, 从而避免了服务雪崩
     // 这是服务的异常的兜底回调
-    public Order createOrderFallBack(Long productId, Long userId, BlockException e) {
+    private Order createOrderFallBack(Long productId, Long userId, BlockException e) {
         Order order = new Order();
+        // SphU异常处理
+        try {
+            SphU.asyncEntry("createOrder");
+        } catch (BlockException ex) {
+            throw new RuntimeException(ex);
+        }
+
         order.setOrderId(0L);
         order.setUserId(userId);
         order.setNickName("未知用户");
