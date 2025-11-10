@@ -1,6 +1,7 @@
 package com.zhao.order.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.zhao.order.bean.Order;
 import com.zhao.order.feign.ProductFeignClient;
 import com.zhao.order.service.OrderService;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -36,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     public ProductFeignClient productFeignClient;
 
 
-    @SentinelResource(value = "createOrder")
+    @SentinelResource(value = "createOrder", blockHandler = "createOrderFallBack")
     @Override
     public Order createOrder(Long productId, Long userId) {
         // 从商品服务远程调用查询商品信息
@@ -107,5 +109,18 @@ public class OrderServiceImpl implements OrderService {
         Product product = restTemplate.getForObject(url, Product.class);
 
         return product;
+    }
+
+    // 处理 Sentinel 阻塞异常, 当 Sentinel 阻塞时, 会调用这个方法, 并返回一个默认值, 而不是抛出异常, 从而避免了服务雪崩
+    // 这是服务的异常的兜底回调
+    public Order createOrderFallBack(Long productId, Long userId, BlockException e) {
+        Order order = new Order();
+        order.setOrderId(0L);
+        order.setUserId(userId);
+        order.setNickName("未知用户");
+        order.setAddress("异常现象: " + e.getClass());
+        order.setTotalAmount(new BigDecimal("0.00"));
+        order.setProductList(Collections.emptyList());
+        return order;
     }
 }
