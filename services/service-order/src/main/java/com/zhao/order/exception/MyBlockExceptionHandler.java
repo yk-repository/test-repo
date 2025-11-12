@@ -22,9 +22,10 @@ public class MyBlockExceptionHandler implements BlockExceptionHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, String s,
                        BlockException e) throws Exception {
+        // 429 表示请求频率过快
+        response.setStatus(429);
         // 设置响应编码
         response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(429);
 
         // 自定义返回结果
         PrintWriter writer = response.getWriter();

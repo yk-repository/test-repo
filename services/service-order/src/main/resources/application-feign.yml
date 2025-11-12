@@ -25,6 +25,9 @@ spring:
       transport:
         dashboard: localhost:8080
       eager: true
+#      开启 Web 上下文统一, 默认为 false, 开启后, 会将 Web 请求的上下文信息统一到 Sentinel 中, 方便在 Sentinel 中进行上下文的传递
+#      Sentinel链路
+#      web-context-unify: false
 
 
 feign:
