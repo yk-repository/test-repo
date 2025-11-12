@@ -18,6 +18,7 @@
     <modules>
         <module>services</module>
         <module>model</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
