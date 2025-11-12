@@ -14,6 +14,6 @@ public interface ProductFeignClient {
     // mcv注解的两套使用逻辑
     // 1.标注在Controller上，是接受这样的请求
     // 2.标注在FigenClient上，是发送这样的请求
-    @GetMapping("product/get/{productId}")
+    @GetMapping("/api/product/get/{productId}")
     public Product getProductById(@PathVariable("productId") Long productId);
 }

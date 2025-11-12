@@ -1,0 +1,47 @@
+spring:
+  cloud:
+    gateway:
+#     路由规则配置：以下配置定义了两个路由规则，分别路由到service-order和service-product服务，按顺序匹配
+      routes:
+        - id: order-route
+#          路由到service-order服务
+          uri: lb://service-order
+#          断言，路径匹配/api/order/**开头的所有请求
+          predicates:
+            - name: Path
+              args:
+                pattern: /api/order/**
+#                匹配路径中的尾斜杠，默认false,如果设置为true,则会匹配/api/order/**和/api/order/**/
+                matchTrailingSlash: true
+#          路由优先级，数值越小，优先级越高
+          order: 0
+#          过滤，去掉路径中的/api/order前缀
+#          filters:
+#            - StripPrefix=1
+        - id: product-route
+          uri: lb://service-product
+          predicates:
+            - Path=/api/product/**
+          order: 1
+#          过滤，去掉路径中的/api/order前缀
+#          filters:
+#            - StripPrefix=1
+#          默认路由，当其他路由都不匹配时，路由到service-order服务
+        - id: default-route
+          uri: lb://service-order
+          predicates:
+            - Path=/**
+          order: 2
+        - id: test-route
+          uri: www.baidu.com
+          predicates:
+            - name: Path
+              args:
+                pattern: /search
+#            Query参数断言，匹配查询参数q的值是否包含haha
+            - name: Query
+              args:
+#                匹配查询参数q的值是否包含haha
+                param: q
+#                匹配查询参数q的值是否包含haha
+                regexp: haha

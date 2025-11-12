@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 // @RefreshScope // 激活配置属性的刷新功能
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 public class OrderController {
 
     // 获取配置中心的内容
@@ -40,6 +40,17 @@ public class OrderController {
         // return "service-order.properties: timeout=" + timeout + ", autoConfirm=" + autoConfirm;
         return "service-order.properties: timeout=" + orderProperties.getTimeout() + ", autoConfirm="
                 + orderProperties.getAutoConfirm() + ", dbUrl=" + orderProperties.getDbUrl();
+    }
+
+
+    @GetMapping("/writeDb")
+    public String writeDb() {
+        return "writeDb success";
+    }
+
+    @GetMapping("/readDb")
+    public String readDb() {
+        return "readDb success";
     }
 
 }

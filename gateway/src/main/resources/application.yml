@@ -1,9 +1,20 @@
 spring:
+  profiles:
+    include: route
   application:
     name: gateway
   cloud:
     nacos:
-      discovery:
-        server-addr: localhost:8848
+      server-addr: 127.0.0.1:8848
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+      #      config:
+#        server-addr: 127.0.0.1:8848
+#        import-check:
+#          enabled: false
+      # 添加LoadBalancer配置，禁用延迟初始化器以解决BeanPostProcessor问题
+#      loadbalancer:
+#        deferring-load-balancer-interceptor:
+#          enabled: false
 server:
   port: 80
