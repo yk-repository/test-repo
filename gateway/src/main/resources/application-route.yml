@@ -24,7 +24,7 @@ spring:
             - Path=/api/product/**
           order: 1
 #          过滤，去掉路径中的/api/order前缀
-          filters:
+#          filters:
 #            - StripPrefix=1
 #           路径重写，将/api/product/前缀替换为/
 #            - RewritePath=/api/product/(?<segment>.*), /$\{segment}
@@ -62,3 +62,6 @@ spring:
 #          这里定义了一个键为hello，值为world的元数据
           metadata:
             hello: world
+#          全局默认过滤器，对所有路由生效
+      default-filters:
+          - AddResponseHeader=X-Response-Id, 123456
