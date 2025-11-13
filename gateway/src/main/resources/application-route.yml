@@ -24,16 +24,21 @@ spring:
             - Path=/api/product/**
           order: 1
 #          过滤，去掉路径中的/api/order前缀
-#          filters:
+          filters:
 #            - StripPrefix=1
-#          默认路由，当其他路由都不匹配时，路由到service-order服务
-        - id: default-route
-          uri: lb://service-order
-          predicates:
-            - Path=/**
-          order: 2000
+#           路径重写，将/api/product/前缀替换为/
+#            - RewritePath=/api/product/(?<segment>.*), /$\{segment}
+#           请求头添加，添加一个X-Request-Id请求头，值为123456
+#             - AddRequestHeader=X-Request-Id, 123456
+#          默认路由，当其他路由都不匹配时，路由到默认服务（相当于兜底路由）
+#        - id: default-route
+#          uri: https://cn.bing.com/
+#          predicates:
+#            - Path=/**
+#          order: 2000
+#          测试路由,必须满足路由http://localhost/search?q=haha&user=admin
         - id: test-route
-          uri: https://www.baidu.com/
+          uri: https://cn.bing.com/
           predicates:
             - name: Path
               args:
@@ -45,4 +50,15 @@ spring:
                 param: q
 #                匹配查询参数q的值是否包含haha
                 regexp: haha
-          order: 3
+#             自定义断言
+#            - Vip=user,admin
+#            长写法，自定义断言，校验vip参数的值是否包含指定的字符串，value的值是admin
+            - name: Vip
+              args:
+                param: user
+                value: admin
+          order: 2
+#          路由元数据，自定义键值对，可在路由中使用，如在过滤器中使用
+#          这里定义了一个键为hello，值为world的元数据
+          metadata:
+            hello: world
